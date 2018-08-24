@@ -16,6 +16,7 @@ PowerMockito.when(managerConfig.getConfigValue("ENABLE")).thenReturn("true");
 PowerMockito.doReturn(result).when(proxy, "getAll", Matchers.anyObject());
 PowerMockito.whenNew(DAOImpl.class).withNoArguments().thenReturn(dao);
 PowerMockito.whenNew(RESTServiceProxy.class).withArguments(Mockito.eq(A.class), Mockito.eq("")).thenReturn(proxy);
+(need to put the class which include new function in PrepareForTest)
 
 void method:
 doNothing().when(historyLogFacade).saveHistoryLog(Matchers.any(), Matchers.any());
@@ -47,8 +48,10 @@ A a;
             Whitebox.invokeMethod(dao, "getEntityManager");
             result = a;
             a.methodA((String) any);
-            result = updateResult;
+            result = result;
         }};
+(if you want to get the result you want, you need to set the result, or it will return a new object.
+if you mock with Expectations, you need to make sure it has call one time at less.)
 
 Final Static Field:
 field.setAccessible(true);
